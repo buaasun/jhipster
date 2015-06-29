@@ -120,7 +120,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/**").authenticated()
             .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/websocket/**").permitAll()
-            .antMatchers("/metrics/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/metrics/**") .hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/health/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/dump/**").hasAuthority(AuthoritiesConstants.ADMIN)

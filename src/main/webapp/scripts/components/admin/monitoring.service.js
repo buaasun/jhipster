@@ -8,7 +8,11 @@ angular.module('jhipsterApp')
                     return response.data;
                 });
             },
-
+            getEnv:function () {
+                return $http.get('env').then(function (response) {
+                    return response.data;
+                });
+            },
             checkHealth: function () {
                 return $http.get('health').then(function (response) {
                     return response.data;

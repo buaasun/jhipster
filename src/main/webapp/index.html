@@ -118,6 +118,9 @@
     <script src="scripts/app/admin/logs/logs.controller.js"></script>
     <script src="scripts/app/admin/metrics/metrics.js"></script>
     <script src="scripts/app/admin/metrics/metrics.controller.js"></script>
+        <script src="scripts/app/admin/env/env.js"></script>
+        <script src="scripts/app/admin/env/env.controller.js"></script>
+
     <script src="scripts/app/entities/entity.js"></script>
     <script src="scripts/app/error/error.js"></script>
     <script src="scripts/app/main/main.js"></script>
@@ -136,5 +139,11 @@
     <script src="scripts/app/entities/author/author-detail.controller.js"></script>
     <script src="scripts/components/entities/author/author.service.js"></script>
     <!-- endbuild -->
+    <script>
+        window.onhashchange=(function(e){
+            console.log(e);
+        })
+
+    </script>
 </body>
 </html>

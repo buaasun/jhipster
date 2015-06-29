@@ -1,29 +1,40 @@
 'use strict';
 
-angular.module('jhipsterApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalprecht.translate', 
+angular.module('jhipsterApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalprecht.translate',
     'ngResource', 'ui.router', 'ngCookies', 'ngCacheBuster', 'infinite-scroll'])
 
-    .run(function ($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
+    .run(function ($log,$rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
         $rootScope.ENV = ENV;
         $rootScope.VERSION = VERSION;
-        $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
+             var locationChangeStartOff = $rootScope.$on('$locationChangeStart', locationChangeStart);
+             var locationChangeSuccessOff = $rootScope.$on('$locationChangeSuccess', locationChangeSuccess);
+             function locationChangeStart(event) {
+                 $log.log('locationChangeStart');
+                 $log.log(arguments);
+             }
+
+             function locationChangeSuccess(event) {
+                 $log.log('locationChangeSuccess');
+                 $log.log(arguments);
+             }
+             $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
             $rootScope.toState = toState;
             $rootScope.toStateParams = toStateParams;
 
             if (Principal.isIdentityResolved()) {
                 Auth.authorize();
             }
-            
+
             // Update the language
             Language.getCurrent().then(function (language) {
                 $translate.use(language);
             });
-            
+
         });
 
         $rootScope.$on('$stateChangeSuccess',  function(event, toState, toParams, fromState, fromParams) {
             var titleKey = 'global.title' ;
-
+            console.log("stateChangeSuccess: %s->%s",fromState.name,toState.name);
             $rootScope.previousStateName = fromState.name;
             $rootScope.previousStateParams = fromParams;
 
@@ -31,12 +42,12 @@ angular.module('jhipsterApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pasca
             if (toState.data.pageTitle) {
                 titleKey = toState.data.pageTitle;
             }
-            
+
             $translate(titleKey).then(function (title) {
                 // Change window title with translated one
                 $window.document.title = title;
             });
-            
+
         });
 
         $rootScope.back = function() {
@@ -53,7 +64,7 @@ angular.module('jhipsterApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pasca
             responseError: function(response) {
                 // If we have an unauthorized request we redirect to the login page
                 // Don't do this check on the account API to avoid infinite loop
-                if (response.status == 401 && response.data.path!="/api/account"){  
+                if (response.status == 401 && response.data.path!="/api/account"){
                     var Auth = $injector.get('Auth');
                     var $state = $injector.get('$state');
                     var to = $rootScope.toState;
@@ -61,8 +72,8 @@ angular.module('jhipsterApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pasca
                     Auth.logout();
                     $rootScope.returnToState = to;
                     $rootScope.returnToStateParams = params;
-                    $state.go('login');    
-                }       
+                    $state.go('login');
+                }
                 return $q.reject(response);
             }
         };
@@ -76,7 +87,10 @@ angular.module('jhipsterApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pasca
         //Cache everything except rest api requests
         httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise(function(){
+            return "/";
+        });
+               $locationProvider.hashPrefix('!');
         $stateProvider.state('site', {
             'abstract': true,
             views: {
@@ -102,18 +116,18 @@ angular.module('jhipsterApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pasca
         $httpProvider.interceptors.push('authExpiredInterceptor');
 
 
-        
+
         // Initialize angular-translate
         $translateProvider.useLoader('$translatePartialLoader', {
             urlTemplate: 'i18n/{lang}/{part}.json'
         });
 
-        $translateProvider.preferredLanguage('en');
+        $translateProvider.preferredLanguage('zh-cn');
         $translateProvider.useCookieStorage();
         $translateProvider.useSanitizeValueStrategy('escaped');
 
         tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
         tmhDynamicLocaleProvider.useCookieStorage();
         tmhDynamicLocaleProvider.storageKey('NG_TRANSLATE_LANG_KEY');
-        
+
     });
