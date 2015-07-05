@@ -6,7 +6,7 @@
     "authenticationType": "session",
     "hibernateCache": "ehcache",
     "clusteredHttpSession": "no",
-    "websocket": "spring-websocket",
+    "websocket": "no",
     "databaseType": "sql",
     "devDatabaseType": "h2Memory",
     "prodDatabaseType": "mysql",
@@ -15,7 +15,7 @@
     "buildTool": "maven",
     "frontendBuilder": "grunt",
     "javaVersion": "8",
-    "enableTranslation": true,
-    "rememberMeKey": "f3e6b2a1851a044959e18406260d119e177e344a"
+    "enableTranslation": false,
+    "rememberMeKey": "218712035900261b176400cfbd177e105deb45a6"
   }
 }

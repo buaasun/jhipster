@@ -4,10 +4,11 @@ security.basic.enabled: false
 
 # Disable Jolokia - An http/json bridge for remote JMX access
 endpoints.jolokia.enabled: false
-
+spring.thymeleaf.mode: LEGACYHTML5
 # security configuration (this key should be unique for your application, and kept secret)
-jhipster.security.rememberme.key: f3e6b2a1851a044959e18406260d119e177e344a
-
+jhipster.security.rememberme.key: 218712035900261b176400cfbd177e105deb45a6
+server.context-path: /co
+#server.servlet-path: /se
 async:
     corePoolSize: 2
     maxPoolSize: 50

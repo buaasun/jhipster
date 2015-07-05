@@ -8,7 +8,7 @@ angular.module('jhipsterApp')
                 url: '/error',
                 data: {
                     roles: [],
-                    pageTitle: 'error.title'
+                    pageTitle: 'Error page!'
                 },
                 views: {
                     'content@': {
@@ -16,10 +16,7 @@ angular.module('jhipsterApp')
                     }
                 },
                 resolve: {
-                    mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
-                        $translatePartialLoader.addPart('error');
-                        return $translate.refresh();
-                    }]
+                    
                 }
             })
             .state('accessdenied', {
@@ -34,10 +31,7 @@ angular.module('jhipsterApp')
                     }
                 },
                 resolve: {
-                    mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
-                        $translatePartialLoader.addPart('error');
-                        return $translate.refresh();
-                    }]
+                    
                 }
             });
     });

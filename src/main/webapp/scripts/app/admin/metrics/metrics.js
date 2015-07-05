@@ -8,7 +8,7 @@ angular.module('jhipsterApp')
                 url: '/metrics',
                 data: {
                     roles: ['ROLE_ADMIN'],
-                    pageTitle: 'metrics.title'
+                    pageTitle: 'Application Metrics'
                 },
                 views: {
                     'content@': {
@@ -17,10 +17,7 @@ angular.module('jhipsterApp')
                     }
                 },
                 resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('metrics');
-                        return $translate.refresh();
-                    }]
+                    
                 }
             });
     });

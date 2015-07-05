@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jhipsterApp')
-    .factory('Auth', function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, Tracker) {
+    .factory('Auth', function Auth($rootScope, $state, $q, Principal, AuthServerProvider, Account, Register, Activate, Password, PasswordResetInit, PasswordResetFinish) {
         return {
             login: function (credentials, callback) {
                 var cb = callback || angular.noop;
@@ -11,11 +11,6 @@ angular.module('jhipsterApp')
                     // retrieve the logged account information
                     Principal.identity(true).then(function(account) {
                       
-                        // After the login the language will be changed to
-                        // the language selected by the user during his registration
-                        $translate.use(account.langKey);
-                        $translate.refresh();
-                        Tracker.sendActivity();
                         deferred.resolve(data);
                     });
                     return cb();

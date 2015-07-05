@@ -8,7 +8,7 @@ angular.module('jhipsterApp')
                 url: '/activate?key',
                 data: {
                     roles: [],
-                    pageTitle: 'activate.title'
+                    pageTitle: 'Activation'
                 },
                 views: {
                     'content@': {
@@ -17,10 +17,7 @@ angular.module('jhipsterApp')
                     }
                 },
                 resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('activate');
-                        return $translate.refresh();
-                    }]
+                    
                 }
             });
     });

@@ -24,8 +24,14 @@ import org.springframework.security.data.repository.query.SecurityEvaluationCont
 
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableWebSecurity
@@ -76,11 +82,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/test/**")
             .antMatchers("/console/**");
     }
+    private static final class MyRequiresCsrfMatcher implements RequestMatcher {
+        private Pattern allowedMethods = Pattern.compile("^(HEAD|TRACE|OPTIONS)$");
 
+        /* (non-Javadoc)
+         * @see org.springframework.security.web.util.matcher.RequestMatcher#matches(javax.servlet.http.HttpServletRequest)
+         */
+        public boolean matches(HttpServletRequest request) {
+            return !allowedMethods.matcher(request.getMethod()).matches();
+        }
+    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .csrf()
+            .csrf()//.requireCsrfProtectionMatcher(new MyRequiresCsrfMatcher())
             .ignoringAntMatchers("/websocket/**")
         .and()
             .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
@@ -118,9 +133,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/account/reset_password/finish").permitAll()
             .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
-            .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/websocket/**").permitAll()
-            .antMatchers("/metrics/**") .hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/metrics/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/health/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/dump/**").hasAuthority(AuthoritiesConstants.ADMIN)

@@ -8,7 +8,7 @@ angular.module('jhipsterApp')
                 url: '/password',
                 data: {
                     roles: ['ROLE_USER'],
-                    pageTitle: 'global.menu.account.password'
+                    pageTitle: 'Password'
                 },
                 views: {
                     'content@': {
@@ -17,10 +17,7 @@ angular.module('jhipsterApp')
                     }
                 },
                 resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('password');
-                        return $translate.refresh();
-                    }]
+                    
                 }
             });
     });

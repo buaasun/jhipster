@@ -8,7 +8,7 @@ angular.module('jhipsterApp')
                 url: '/settings',
                 data: {
                     roles: ['ROLE_USER'],
-                    pageTitle: 'global.menu.account.settings'
+                    pageTitle: 'Settings'
                 },
                 views: {
                     'content@': {
@@ -17,10 +17,7 @@ angular.module('jhipsterApp')
                     }
                 },
                 resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('settings');
-                        return $translate.refresh();
-                    }]
+                    
                 }
             });
     });

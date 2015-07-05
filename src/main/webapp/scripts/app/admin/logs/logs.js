@@ -8,7 +8,7 @@ angular.module('jhipsterApp')
                 url: '/logs',
                 data: {
                     roles: ['ROLE_ADMIN'],
-                    pageTitle: 'logs.title'
+                    pageTitle: 'Logs'
                 },
                 views: {
                     'content@': {
@@ -17,10 +17,7 @@ angular.module('jhipsterApp')
                     }
                 },
                 resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('logs');
-                        return $translate.refresh();
-                    }]
+                    
                 }
             });
     });

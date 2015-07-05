@@ -8,7 +8,7 @@ angular.module('jhipsterApp')
                 url: '/health',
                 data: {
                     roles: ['ROLE_ADMIN'],
-                    pageTitle: 'health.title'
+                    pageTitle: 'Health checks'
                 },
                 views: {
                     'content@': {
@@ -17,10 +17,7 @@ angular.module('jhipsterApp')
                     }
                 },
                 resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('health');
-                        return $translate.refresh();
-                    }]
+                    
                 }
             });
     });
